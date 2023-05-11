@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load main_tags %}
+
+{% block content %}
+<div class="employees">
+    <ul class="table_employees">
+        <li>
+            <div class="top-block">
+                <div class="time_update">
+                    Время обновление: {{ p.time_update }}</div>
+                <div class="category_news">Категория: {{ p.cat }}</div>
+            </div>
+            <div class="new_photo">
+                {% if p.photo %}
+                <p><img src="{{ p.photo.url }}" class="img-article-left" width="400px"></p>
+                {% else %}
+                <img src="{% static 'img/earth-hour.png' %}" width="400px">
+                {% endif %}
+            </div>
+            <div class="employee_info">
+                <div class="new_title">
+                    {{ p.status }}: {{ p.name }} {{ p.surname }}
+                    <hr>
+                </div>
+                <div class="new_content">
+                    <div class="post_document">
+                        {% if p.document %}
+                            <a href="{{ p.document.url }}">Посмотреть документы</a>
+                        <hr>
+                        {% endif %}
+                    </div>
+                    <div class="address_employee">
+                        <a href="tel: +996{{ p.phone.url }}">Номер: +996{{ p.phone }}</a>
+                        <hr>
+                        <a href="mailto: {{ p.email.url }}">Почта: {{ p.email }}</a>
+                    </div>
+                    <hr>
+                    <div class="info-employee">
+                        {{ p.info }}
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </li>
+    </ul>
+</div>
+{% endblock %}

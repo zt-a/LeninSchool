@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="news">
+    {% for new in all_news %}
+    {% if new.is_published %}
+    <ul class="table_news">
+        <li>
+            <div class="top-block">
+                <div class="time_update">
+                    Время обновление: {{ new.time_update }}</div>
+                <div class="category_news">Категория: {{ new.cat }}</div>
+            </div>
+            <div class="new_photo">
+            {% if new.photo %}
+            <img src="{{ new.photo.url }}" height="400px">
+            {% else %}
+            <img src="{% static 'img/earth-hour.png' %}" height="400px">
+            {% endif %}
+            </div>
+            <div class="new_info">
+                <div class="new_title">{{ new.title }}</div>
+                <br>
+                <div class="news_content">
+                    <p>{{ new.content }}</p>
+                </div>
+                <br>
+            </div>
+            <p class="button_inf"><button class="btn btn-primary"><a style="color: white; " href="new/{{ new.slug }}">Подробнее</a></button></p>
+        </li>
+    </ul>
+    {% endif %}
+    <hr>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

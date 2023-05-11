@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<ul class="categories_table">
+    {% for ras in raspisanie_name %}
+
+    <li>{{ ras.class_name }}&nbsp; | &nbsp; <a href="{{ ras.class_url_slug }}">Расписания</a></li>
+    <hr>
+    {% endfor %}
+</ul>
+
+{% endblock %}

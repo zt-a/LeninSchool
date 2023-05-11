@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+<div class="employees_tables">
+    {% for a in all_employees %}
+    {% if a.is_published %}
+    <ul class="tables_employees">
+        <li>
+            <div class="top-block">
+                <div class="time_update">
+                    Время обновление: {{ a.time_update }}</div>
+            </div>
+            <div class="employees_photo">
+                {% if a.photo %}
+                <img src="{{ a.photo.url }}" height="400px">
+                {% else %}
+                <img src="{% static 'img/earth-hour.png' %}" width="400px">
+                {% endif %}
+            </div>
+            <div class="employees_info">
+                <div class="employees_title">
+                    {{ a.status }}: {{ a.name }} {{ a.surname }}
+                </div>
+                <div class="employees_content">
+
+                </div>
+            </div>
+            <hr>
+            <button class="btn btn-primary"><a style="color: white; " href="post/{{ a.slug }}">Подробнее</a></button>
+        </li>
+
+    </ul>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

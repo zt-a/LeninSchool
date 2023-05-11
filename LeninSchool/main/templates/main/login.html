@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+<form action="" method="post" class="log_in_form">
+    {% csrf_token %}
+    <label for="email_id">E-mail</label>
+    <input class="email form-control" id="email_id" placeholder="E-mail">
+    <br>
+    <label for="password_id">Password</label>
+    <input type="password" class="password form-control" id="password_id" placeholder="Password">
+    <br>
+    <button type="submit" class="btn btn-primary" >Войти</button>
+</form>
+{% endblock %}

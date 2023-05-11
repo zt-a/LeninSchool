@@ -1,0 +1,70 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load main_tags %}
+
+{% block content %}
+<div class="post_news">
+    <ul class="table_post_news">
+        <li>
+            {% for post in posts %}
+            {% get_name_file post.file.name as file_name %}
+
+            <div class="top-block">
+                <div class="time_update">
+                    Время обновление: {{ post.time_update }}</div>
+                <div class="category_news">Категория: {{ post.cat }}</div>
+            </div>
+            <div class="new_photo">
+                {% if post.photo %}
+                <p><img src="{{ post.photo.url }}" class="img-article-left" width="400px"></p>
+                {% else %}
+                <img src="{% static 'img/earth-hour.png' %}" width="400px">
+                {% endif %}
+            </div>
+            <div class="employe_inf">
+                <div class="new_content">
+                    <div class="new_title">
+                        <h2>{{ post.title }}</h2>
+                    </div>
+
+                    {{ post.content|linebreaks }}
+                    <hr>
+                    {% if post.video %}
+                        {% get_name_file post.video.name as video_name %}
+                        <div class="video_content">
+<!--                            <p class="video_name">Название видео: {{ video_name }}</p>-->
+<!--                            <video controls width="600px" style="float: left;">-->
+<!--                                <source src="{{ post.video.url }}" type="video/mp4" style="position: relative;">-->
+<!--                            </video>-->
+                            <a href="{{ post.video.url }}">Посмотреть видео файл <br> {{ video_name }}</a>
+                        </div>
+                    <hr>
+                    {% endif %}
+                    <br>
+                    {% if post.audio %}
+                        {% get_name_file post.audio.name as audio_name %}
+                    <div class="audio_content">
+                        <p class="audio_name">{{ audio_name }}</p>
+                        <audio controls>
+                            <source media="(min-width: 200px)" src="{{ post.audio.url }}" type="audio/mp3">
+                        </audio>
+                        <br>
+                        <a href="{{ post.audio.url }}">Посмотреть аудио файл <br> {{ audio_name }}</a>
+                    </div>
+                    <hr>
+                    {% endif %}
+                    <br>
+                    <div class="post_file">
+                        {% if post.file %}
+                            <a href="{{ post.file.url }}">Посмотреть файл <br> {{ file_name }}</a>
+                        <hr>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+        </li>
+    </ul>
+</div>
+{% endblock %}

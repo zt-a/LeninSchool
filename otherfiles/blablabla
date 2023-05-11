@@ -1,0 +1,90 @@
+models.py
+class AddRaspisanie(models.Model):
+    class_cat = models.ForeignKey('ClassCat', on_delete=models.PROTECT, verbose_name='Класс',  null=True)
+    class_cat_slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
+    # Class = models.CharField(max_length=3, verbose_name='Какой класс')
+    name = models.CharField(max_length=255, verbose_name='Ваше имя и фамилия')
+    day1example1 = models.CharField(max_length=30, verbose_name='День 1 урок 1')
+    day1example2 = models.CharField(max_length=30, verbose_name='День 1 урок 2')
+    day1example3 = models.CharField(max_length=30, verbose_name='День 1 урок 3')
+    day1example4 = models.CharField(max_length=30, verbose_name='День 1 урок 4')
+    day1example5 = models.CharField(max_length=30, verbose_name='День 1 урок 5')
+    day1example6 = models.CharField(max_length=30, verbose_name='День 1 урок 6')
+
+    day2example1 = models.CharField(max_length=30, verbose_name='День 2 урок 1')
+    day2example2 = models.CharField(max_length=30, verbose_name='День 2 урок 2')
+    day2example3 = models.CharField(max_length=30, verbose_name='День 2 урок 3')
+    day2example4 = models.CharField(max_length=30, verbose_name='День 2 урок 4')
+    day2example5 = models.CharField(max_length=30, verbose_name='День 2 урок 5')
+    day2example6 = models.CharField(max_length=30, verbose_name='День 2 урок 6')
+
+    day3example1 = models.CharField(max_length=30, verbose_name='День 3 урок 1')
+    day3example2 = models.CharField(max_length=30, verbose_name='День 3 урок 2')
+    day3example3 = models.CharField(max_length=30, verbose_name='День 3 урок 3')
+    day3example4 = models.CharField(max_length=30, verbose_name='День 3 урок 4')
+    day3example5 = models.CharField(max_length=30, verbose_name='День 3 урок 5')
+    day3example6 = models.CharField(max_length=30, verbose_name='День 3 урок 6')
+
+    day4example1 = models.CharField(max_length=30, verbose_name='День 4 урок 1')
+    day4example2 = models.CharField(max_length=30, verbose_name='День 4 урок 2')
+    day4example3 = models.CharField(max_length=30, verbose_name='День 4 урок 3')
+    day4example4 = models.CharField(max_length=30, verbose_name='День 4 урок 4')
+    day4example5 = models.CharField(max_length=30, verbose_name='День 4 урок 5')
+    day4example6 = models.CharField(max_length=30, verbose_name='День 4 урок 6')
+
+    day5example1 = models.CharField(max_length=30, verbose_name='День 5 урок 1')
+    day5example2 = models.CharField(max_length=30, verbose_name='День 5 урок 2')
+    day5example3 = models.CharField(max_length=30, verbose_name='День 5 урок 3')
+    day5example4 = models.CharField(max_length=30, verbose_name='День 5 урок 4')
+    day5example5 = models.CharField(max_length=30, verbose_name='День 5 урок 5')
+    day5example6 = models.CharField(max_length=30, verbose_name='День 5 урок 6')
+
+    time_create = models.DateTimeField(verbose_name='Время создание', auto_now_add=True)
+    time_update = models.DateTimeField(verbose_name='Время обновление', auto_now=True)
+    is_published = models.BooleanField(verbose_name='Публикация', default=True)
+
+
+    def __str__(self):
+        return self.class_cat
+
+    def get_absolute_url(self):
+        return reverse('raspisanie', kwargs={'class_slug': self.slug})
+
+    class Meta:
+        verbose_name = 'Расписания'
+        verbose_name_plural = 'Расписании'
+        ordering = ['-time_create', 'id']
+
+models.py
+class ClassCat(models.Model):
+    class_name = models.CharField(max_length=255, db_index=True, verbose_name='Класс')
+
+
+    def __str__(self):
+        return self.class_name
+
+    def get_absolute_url(self):
+        return reverse('raspisanie', kwargs={'cat_slug': self.slug})
+
+    class Meta:
+        verbose_name = 'Список классов'
+        verbose_name_plural = 'Список классов'
+        ordering = ['id', ]
+
+
+
+
+
+
+
+
+
+
+admin.py
+class RasAdmin(admin.ModelAdmin):
+    list_display = ('id', 'class_cat', 'class_cat_slug', 'time_create', 'time_update', 'is_published')
+    list_display_links = ('id', 'class_cat')
+    search_fields = ('id', 'class_cat', 'name', 'time_create', 'time_update',)
+    list_editable = ('is_published', )
+    list_filter = ('is_published', 'time_create')
+    prepopulated_fields = {'class_cat_slug': ('class_cat', )}

@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+<form action="{% url 'addpage' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="form-errors">{{ form.non_field_errors }}</div>
+
+    {% for f in form %}
+    <p class="form-input-p"><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label> {{ f }} </p>
+    <div class="form-text text-muted">{{ f.errors }}</div>
+    <br>
+    {% endfor %}
+    <button class="btn btn-primary form-errors" type="submit" >Добавить статью</button>
+</form>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% load main_tags %}
+
+
+{% block content %}
+{% get_categories as categories %}
+{% for cat in categories %}
+{% if cat.slug in cat_selected %}
+{{ cat.name }}
+{% endif %}
+{% endfor %}
+{% endblock %}
