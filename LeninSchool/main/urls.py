@@ -13,11 +13,13 @@ urlpatterns = [
     path('employees/', EmployeesView.as_view(), name='employees'),
     path('employees/post/<int:post_id>/', show_post_employees, name='employees_post'),
     path('employees/post/<slug:post_slug>/', show_post_employees, name='employees_post'),
-    path('login/', LoginView.as_view(), name='login'),
+    path('login/', LoginUserView.as_view(), name='login'),
+    path('logout/', logout_user, name='logout'),
     path('register/', RegisterView.as_view(), name='register'),
     path('categorys/', CategorysView.as_view(), name='categorys'),
     path('category/<int:cat_id>/', category, name='category'),
     path('category/<slug:cat_slug>/', category, name='category'),
     path('raspisanie/', rasView, name='raspisanie'),
     path('raspisanie/<slug:class_slug>/', rasViewClasses, name='class_ras'),
+    path('accounts/profile/', profile_user, name='profile')
 ]

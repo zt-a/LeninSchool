@@ -9,7 +9,7 @@ menu = [
     {'title': 'Обратная связь', 'url_name': 'contact_us'},
     {'title': 'Правило школы', 'url_name': 'school_rules'},
     # {'title': 'Категории', 'url_name': 'categorys'},
-    {'title': 'Добавить_статью', 'url_name': 'addpage'},
+    # {'title': 'Добавить_статью', 'url_name': 'addpage'},
     {'title': 'Расписания', 'url_name': 'raspisanie'},
 ]
 

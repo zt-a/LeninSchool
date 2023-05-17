@@ -1,5 +1,9 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.models import User
+
 from .models import *
+
 
 class AddPostForm(forms.ModelForm):
     # title = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class': 'form-control'}), label='Загаловок')
@@ -14,7 +18,7 @@ class AddPostForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['cat'].empty_label='Категория не выбрано'
+        self.fields['cat'].empty_label = 'Категория не выбрано'
         self.fields['cat'].queryset = Category.objects.all()
 
         self.fields['is_published'].reqired = False
@@ -32,10 +36,7 @@ class AddPostForm(forms.ModelForm):
         # self.fields['file'].label = 'Файл (необезательно)'
         # self.fields['file'].reqired = False
 
-
-
     class Meta:
-
         model = News
         fields = ['title', 'slug', 'content', 'photo', 'is_published', 'cat', ]
         widgets = {
@@ -51,4 +52,22 @@ class AddPostForm(forms.ModelForm):
         }
 
 
+class RegisterUserForm(UserCreationForm):
+    username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'name_reg form-control'}))
+    first_name = forms.CharField(label='Имя', widget=forms.TextInput(attrs={'class': 'name_reg form-control'}))
+    last_name = forms.CharField(label='Фамилия', widget=forms.TextInput(attrs={'class': 'name_reg form-control'}))
+    email = forms.EmailField(label='Электронная почта', widget=forms.EmailInput(attrs={'class': 'email form-control'}))
+    password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'password form-control'}))
+    password2 = forms.CharField(label='Потверждение пароля',
+                                widget=forms.PasswordInput(attrs={'class': 'password form-control'}))
 
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'username', 'email', 'password1', 'password2')
+
+
+
+
+class LoginUserForm(AuthenticationForm):
+    username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'name_reg form-control'}))
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'password form-control'}))

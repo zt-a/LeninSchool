@@ -4,23 +4,34 @@
 {% block content %}
 <form action="" method="post" class="sing_up_form">
     {% csrf_token %}
-    <label for="name_id">Имя</label>
-    <input type="text" id="name_id" class="name_reg form-control" placeholder="Name">
-    <br>
-    <label for="surname_id">Фамилия</label>
-    <input type="text" id="surname_id" class="surname_reg form-control" placeholder="Surname">
-    <br>
-    <label for="email_id">E-mail</label>
-    <input class="email form-control" id="email_id" placeholder="E-mail">
-    <br>
-    <label for="password_id">Password</label>
-    <input type="password" class="password form-control" id="password_id" placeholder="Password">
-    <br>
-    <br>
-    <label for="teacher_sts"> Учитель </label><input type="radio" id="teacher_sts">
-    <label for="children_sts"> Ученик </label><input type="radio" id="children_sts">
-    <br>
-    <br>
+<!--    {% for f in form %}-->
+<!--    <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}:</label>{{ f }}</p>-->
+<!--    <div class="form-error">{{ f.errors }}</div>-->
+<!--    {% endfor %}-->
+
+
+    <div class="leftFormRegister">
+        <p><label class="form-label" for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}: </label>{{ form.first_name }}</p>
+        <div class="form-error">{{ form.first_name.errors }}</div>
+
+        <p><label class="form-label" for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}: </label>{{ form.last_name }}</p>
+        <div class="form-error">{{ form.last_name.errors }}</div>
+    </div>
+    <div class="centerFormRegister">
+        <p><label class="form-label" for="{{ form.username.id_for_label }}">{{ form.username.label }}: </label>{{ form.username }}</p>
+        <div class="form-error">{{ form.username.errors }}</div>
+
+        <p><label class="form-label" for="{{ form.email.id_for_label }}">{{ form.email.label }}: </label>{{ form.email }}</p>
+        <div class="form-error">{{ form.email.errors }}</div>
+    </div>
+    <div class="rightFormRegister">
+        <p><label class="form-label" for="{{ form.password1.id_for_label }}">{{ form.password1.label }}: </label>{{ form.password1 }}</p>
+        <div class="form-error">{{ form.password1.errors }}</div>
+
+        <p><label class="form-label" for="{{ form.password2.id_for_label }}">{{ form.password2.label }}: </label>{{ form.password2 }}</p>
+        <div class="form-error">{{ form.password2.errors }}</div>
+    </div>
+    <div class="clear"></div>
     <button type="submit" class="btn btn-primary" >Регистрация</button>
 </form>
 {% endblock %}

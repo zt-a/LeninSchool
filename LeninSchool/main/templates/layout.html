@@ -32,6 +32,9 @@
             </address>
             <div class="kabinet">
                 <div class="user">
+                    {% if request.user.is_authenticated %}
+                    <p><span class="username_kabinet"><a href="{% url 'profile' %}">{{ user.username }}</a></span> | <a href="{% url 'logout' %}">Выйти</a></p>
+                    {% else %}
                     <div class="reg">
                         <button class="btn btn-white"><a href="{% url 'register' %}">Регистрация</a></button>
                     </div>
@@ -39,6 +42,7 @@
                     <div class="auth">
                         <button class="btn btn-white"><a href="{% url 'login' %}">Вход</a></button>
                     </div>
+                    {% endif %}
                 </div>
                 <ul class="lang">
                     <li>

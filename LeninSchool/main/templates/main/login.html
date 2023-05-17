@@ -4,12 +4,11 @@
 {% block content %}
 <form action="" method="post" class="log_in_form">
     {% csrf_token %}
-    <label for="email_id">E-mail</label>
-    <input class="email form-control" id="email_id" placeholder="E-mail">
-    <br>
-    <label for="password_id">Password</label>
-    <input type="password" class="password form-control" id="password_id" placeholder="Password">
-    <br>
+    <div class="form-error">{{ form.non_field_errors }}</div>
+    {% for f in form %}
+        <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>
+        <div class="form-error">{{ f.errors }}</div>
+    {% endfor %}
     <button type="submit" class="btn btn-primary" >Войти</button>
 </form>
 {% endblock %}

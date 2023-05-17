@@ -737,9 +737,15 @@ body {
 }
 
 .sing_up_form {
-    width: 30%;
-    margin: auto;
+    width: 90%;
+    margin: 50px;
 }
+
+.form-error {
+    color: red;
+}
+
+
 
 .list-pages {
 	text-align: center;
@@ -802,4 +808,25 @@ body {
     padding-top: 10px;
     padding-bottom: auto;
     margin: 10px;
+}
+
+
+
+
+.leftFormRegister {
+    float: left;
+    margin: 10px;
+    width: 30%;
+}
+
+.centerFormRegister {
+    float: left;
+    margin: 10px;
+    width: 30%;
+}
+
+.rightFormRegister {
+    float: left;
+    margin: 10px;
+    width: 30%;
 }

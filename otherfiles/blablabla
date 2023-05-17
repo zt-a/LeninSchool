@@ -88,3 +88,30 @@ class RasAdmin(admin.ModelAdmin):
     list_editable = ('is_published', )
     list_filter = ('is_published', 'time_create')
     prepopulated_fields = {'class_cat_slug': ('class_cat', )}
+
+
+
+
+
+
+
+
+
+
+<!--    <label for="name_id">Имя</label>-->
+<!--    <input type="text" id="name_id" class="name_reg form-control" placeholder="Name">-->
+<!--    <br>-->
+<!--    <label for="surname_id">Фамилия</label>-->
+<!--    <input type="text" id="surname_id" class="surname_reg form-control" placeholder="Surname">-->
+<!--    <br>-->
+<!--    <label for="email_id">E-mail</label>-->
+<!--    <input class="email form-control" id="email_id" placeholder="E-mail">-->
+<!--    <br>-->
+<!--    <label for="password_id">Password</label>-->
+<!--    <input type="password" class="password form-control" id="password_id" placeholder="Password">-->
+<!--    <br>-->
+<!--    <br>-->
+<!--    <label for="teacher_sts"> Учитель </label><input type="radio" id="teacher_sts">-->
+<!--    <label for="children_sts"> Ученик </label><input type="radio" id="children_sts">-->
+<!--    <br>-->
+<!--    <br>-->

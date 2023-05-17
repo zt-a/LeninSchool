@@ -1,4 +1,5 @@
-
+from django.contrib.auth import logout, login
+from django.contrib.auth.views import LoginView
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
@@ -211,15 +212,22 @@ def school_rules(request):
     return render(request, 'main/school_rules.html', context=context)
 
 
-class RegisterView(DataMixin, ListView):
-    model = None
+class RegisterView(DataMixin, CreateView):
+    form_class = RegisterUserForm
     template_name = 'main/register.html'
+    success_url = reverse_lazy('login')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title='Регистрациая')
+        c_def = self.get_user_context(title='Регистрация')
 
         return dict(list(context.items()) + list(c_def.items()))
+
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('home')
 
     def get_queryset(self):
         return
@@ -233,25 +241,38 @@ def register(request):
 
 
 
-class LoginView(DataMixin, ListView):
-    model = None
+class LoginUserView(DataMixin, LoginView):
+    form_class = LoginUserForm
     template_name = 'main/login.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Авторизация')
-
         return dict(list(context.items()) + list(c_def.items()))
 
-    def get_queryset(self):
-        return
+    def get_success_url(self):
+        return reverse_lazy('home')
 
-def login(request):
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')
+
+def log_in(request):
     context = {
         'title': 'Авторизация',
         'menu': menu,
     }
     return render(request, 'main/login.html', context=context)
+
+
+def profile_user(request):
+    context = {
+        'menu': menu,
+        'title': 'Профиль',
+    }
+    return render(request, 'main/profile.html', context=context)
+
 
 class CategoryView(DataMixin, ListView):
     model = Category
