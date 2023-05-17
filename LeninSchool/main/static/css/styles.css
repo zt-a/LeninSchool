@@ -132,12 +132,18 @@ body {
         grid-template-columns: repeat(3, 1fr);
     }
 
+@media (min-width: 1500px) {
+    .employees_tables {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 @media (max-width: 1500px) {
     .kabinet {
         margin-left: 1000px;
     }
     .employees_tables {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
 
     }
     .raspisanie {
@@ -777,12 +783,14 @@ body {
 }
 .list-pages .page-num-selected {
 	border: none;
-	color: #000;
+	color: blue;
 	font-size: 20px;
 }
 .list-pages .page-num-selected:hover {
 	box-shadow: none;
 }
+
+
 
 .raspisanie {
 

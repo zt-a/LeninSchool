@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="employees_tables">
-    {% for a in all_employees %}
+    {% for a in page_obj %}
     {% if a.is_published %}
     <ul class="tables_employees">
         <li>

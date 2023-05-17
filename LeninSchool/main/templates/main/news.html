@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="news">
-    {% for new in all_news %}
+    {% for new in page_obj %}
     {% if new.is_published %}
     <ul class="table_news">
         <li>

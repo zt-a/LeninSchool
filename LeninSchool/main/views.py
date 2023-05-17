@@ -32,7 +32,7 @@ def index(request):
 
 
 class NewsViews(DataMixin, ListView):
-    paginate_by = 1
+    paginate_by = 5
     model = News
     template_name = 'main/news.html'
     context_object_name = 'all_news'
