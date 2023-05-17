@@ -131,3 +131,21 @@ class AddRaspisanie(models.Model):
         verbose_name = 'Расписания'
         verbose_name_plural = 'Расписании'
         ordering = ['-time_create', 'id']
+
+
+
+class SchoolRulesModel(models.Model):
+    title = models.CharField(max_length=255, verbose_name='Загаловок')
+    rules = models.TextField(verbose_name='Правило')
+    time_create = models.DateTimeField(verbose_name='Время создание', auto_now_add=True)
+    time_update = models.DateTimeField(verbose_name='Время обновление', auto_now=True)
+    is_published = models.BooleanField(verbose_name='Публикация', default=True)
+
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Правило'
+        verbose_name_plural = 'Правилы'
+        ordering = ['-time_create', 'id']

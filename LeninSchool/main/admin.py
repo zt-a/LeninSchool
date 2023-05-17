@@ -32,7 +32,16 @@ class RasAdmin(admin.ModelAdmin):
     list_filter = ('is_published', 'time_create')
     prepopulated_fields = {'class_url_slug': ('class_name', )}
 
+
+class SchoolRulesAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'rules', 'time_create', 'time_update', 'is_published')
+    list_display_links = ('id', 'title', )
+    search_fields = ('if', 'name', 'time_create', 'time_update',)
+    list_editable = ('is_published', )
+    list_filter = ('is_published', 'time_create')
+
 admin.site.register(Employees, EmloyeesAdmin)
 admin.site.register(News, NewsAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(AddRaspisanie, RasAdmin)
+admin.site.register(SchoolRulesModel, SchoolRulesAdmin)

@@ -23,6 +23,7 @@ class DataMixin:
         cats = Category.objects.all()
         all_employees = Employees.objects.all()
         raspisanie = AddRaspisanie.objects.all()
+        rules = SchoolRulesModel.objects.all()
 
         user_menu = menu.copy()
         if not self.request.user.is_authenticated:
@@ -34,6 +35,7 @@ class DataMixin:
         context['all_employees'] = all_employees
         context['p'] = post
         context['raspisanie'] = raspisanie
+        context['rules'] = rules
 
         return context
 
