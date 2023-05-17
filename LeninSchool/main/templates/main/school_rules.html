@@ -4,6 +4,14 @@
 {% block content %}
 <h1>
     Соблюдайте правило!
-    {{ rules.as_p %}
+
 </h1>
+
+<ul>
+    {% for rule in rules %}
+    <hr>
+    <li>{{ rule.title }}<br>{{ rule.rules }}</li>
+    {% endfor %}
+</ul>
+
 {% endblock %}
