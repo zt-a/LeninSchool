@@ -14,12 +14,8 @@ class AddPostForm(forms.ModelForm):
     # # video = forms.FileField(label='Видео (необезательно)', required=False, widget=forms.TextInput(attrs={'class': 'custom-file-input', 'type': 'file'}), validators=[FileExtensionValidator(allowed_extensions=['MOV', 'avi', 'mp4', 'webm', 'mkv', 'wmv', 'avi', 'flm', 'ogg'])])
     # # file = forms.FileField(label='Файл (необезательно)', required=False, widget=forms.TextInput(attrs={'class': 'custom-file-input', 'type': 'file'}))
     # is_published = forms.BooleanField(label='Публикация', required=False, initial=True, widget=forms.CheckboxInput(attrs={'class': 'form-check-input', 'type': 'checkbox'}))
-    # cat = forms.ModelChoiceField(queryset=Category.objects.all(), label='Категория', empty_label='Категория не выбрано', widget=forms.Select(attrs={'class': 'custom-select'}))
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        self.fields['cat'].empty_label = 'Категория не выбрано'
-        self.fields['cat'].queryset = Category.objects.all()
 
         self.fields['is_published'].reqired = False
         self.fields['is_published'].initial = True
@@ -38,7 +34,7 @@ class AddPostForm(forms.ModelForm):
 
     class Meta:
         model = News
-        fields = ['title', 'slug', 'content', 'photo', 'is_published', 'cat', ]
+        fields = ['title', 'slug', 'content', 'photo', 'is_published',]
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'slug': forms.TextInput(attrs={'class': 'form-control'}),
@@ -48,7 +44,6 @@ class AddPostForm(forms.ModelForm):
             # 'video': forms.TextInput(attrs={'class': 'custom-file-input', 'type': 'file'}),
             # 'file': forms.TextInput(attrs={'class': 'custom-file-input', 'type': 'file'}),
             'is_published': forms.CheckboxInput(attrs={'class': 'form-check-input', 'type': 'checkbox'}),
-            'cat': forms.Select(attrs={'class': 'custom-select'}),
         }
 
 

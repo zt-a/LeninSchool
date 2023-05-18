@@ -1,4 +1,4 @@
-from django.db import models
+# from django.db import models
 
 from django.core.validators import FileExtensionValidator
 from django.db import models
@@ -11,14 +11,16 @@ class Employees(models.Model):
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
     info = models.TextField(verbose_name='Контент', null=True)
     email = models.EmailField(verbose_name='Почта', max_length=255)
-    phone = models.IntegerField(verbose_name='Номер телефона')
+    phone = models.IntegerField(verbose_name='Номер телефона пр. (996701500422)')
     photo = models.ImageField(verbose_name='Фотография', upload_to='photos/employees/%Y/', null=True, blank=True)
     status = models.CharField(verbose_name='Статус', max_length=255)
-    document = models.FileField(verbose_name='Документ в pdf формате', upload_to='documents/employees/%Y/%m/%d/', null=True, blank=True, validators=[FileExtensionValidator(allowed_extensions=['pdf', ])])
+    document = models.FileField(verbose_name='Документ в pdf формате', upload_to='documents/employees/%Y/%m/%d/',
+                                null=True, blank=True,
+                                validators=[FileExtensionValidator(allowed_extensions=['pdf', ])])
     time_create = models.DateTimeField(verbose_name='Время создание', auto_now_add=True)
     time_update = models.DateTimeField(verbose_name='Время обновление', auto_now=True)
     is_published = models.BooleanField(verbose_name='Публикация', default=True)
-    cat = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name='Категория', null=True)
+
 
     def __str__(self):
         return f'{self.name}, {self.surname}'
@@ -32,38 +34,22 @@ class Employees(models.Model):
         ordering = ['id']
 
 
-class Category(models.Model):
-    name = models.CharField(max_length=255, db_index=True, verbose_name='Имя')
-    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
-
-
-    def __str__(self):
-        return self.name
-
-    def get_absolute_url(self):
-        return reverse('category', kwargs={'cat_slug': self.slug})
-
-    class Meta:
-        verbose_name = 'Категория'
-        verbose_name_plural = 'Категории'
-        ordering = ['id', ]
-
-
-
 class News(models.Model):
     title = models.CharField(max_length=255, verbose_name='Загаловок')
     content = models.TextField(verbose_name='Контент')
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
     photo = models.ImageField(verbose_name='Фотография', upload_to='photos/news/%Y/%m/%d/', null=True, blank=True)
-    video = models.FileField(verbose_name='Видео', upload_to='videos/news/%Y/%m/%d/', null=True, blank=True, validators=[FileExtensionValidator(allowed_extensions=['MOV', 'avi', 'mp4', 'webm', 'mkv', 'wmv', 'avi', 'flm', 'ogg'])])
-    audio = models.FileField(verbose_name='Аудио', upload_to='musics/news/%Y/%m/%d/', null=True, blank=True, validators=[FileExtensionValidator(allowed_extensions=['MP3', 'mp3', 'ogg', 'wav', 'tac', 'adx', 'flac', 'wma', 'aac', 'opus', 'm4a', 'ape', 'pac', 'flac'])])
+    video = models.FileField(verbose_name='Видео', upload_to='videos/news/%Y/%m/%d/', null=True, blank=True,
+                             validators=[FileExtensionValidator(
+                                 allowed_extensions=['MOV', 'avi', 'mp4', 'webm', 'mkv', 'wmv', 'avi', 'flm', 'ogg'])])
+    audio = models.FileField(verbose_name='Аудио', upload_to='musics/news/%Y/%m/%d/', null=True, blank=True,
+                             validators=[FileExtensionValidator(
+                                 allowed_extensions=['MP3', 'mp3', 'ogg', 'wav', 'tac', 'adx', 'flac', 'wma', 'aac',
+                                                     'opus', 'm4a', 'ape', 'pac', 'flac'])])
     file = models.FileField(verbose_name='Файл', upload_to='files/news/%Y/%m/%d/', null=True, blank=True)
     time_create = models.DateTimeField(verbose_name='Время создание', auto_now_add=True)
     time_update = models.DateTimeField(verbose_name='Время обновление', auto_now=True)
     is_published = models.BooleanField(verbose_name='Публикация', default=True)
-    cat = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name='Категория', null=True)
-
-
 
     def __str__(self):
         return self.title
@@ -120,18 +106,16 @@ class AddRaspisanie(models.Model):
     time_update = models.DateTimeField(verbose_name='Время обновление', auto_now=True)
     is_published = models.BooleanField(verbose_name='Публикация', default=True)
 
-
     def __str__(self):
         return self.class_name
 
     def get_absolute_url(self):
-        return reverse('raspisanie', kwargs={'class_slug': self.slug})
+        return reverse('raspisanie', kwargs={'class_slug': self.class_url_slug})
 
     class Meta:
         verbose_name = 'Расписания'
         verbose_name_plural = 'Расписании'
         ordering = ['-time_create', 'id']
-
 
 
 class SchoolRulesModel(models.Model):
@@ -140,7 +124,6 @@ class SchoolRulesModel(models.Model):
     time_create = models.DateTimeField(verbose_name='Время создание', auto_now_add=True)
     time_update = models.DateTimeField(verbose_name='Время обновление', auto_now=True)
     is_published = models.BooleanField(verbose_name='Публикация', default=True)
-
 
     def __str__(self):
         return self.title

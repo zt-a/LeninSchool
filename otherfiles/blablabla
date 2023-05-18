@@ -115,3 +115,68 @@ class RasAdmin(admin.ModelAdmin):
 <!--    <label for="children_sts"> Ученик </label><input type="radio" id="children_sts">-->
 <!--    <br>-->
 <!--    <br>-->
+
+
+
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=255, db_index=True, verbose_name='Имя')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
+
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('category', kwargs={'cat_slug': self.slug})
+
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+        ordering = ['id', ]
+
+class CategoryView(DataMixin, ListView):
+    model = Category
+    template_name = 'main/category.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Категория')
+
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        return Category.objects.filter(is_published=True)
+
+        class CategorysView(DataMixin, ListView):
+    model = Category
+    template_name = 'main/categorys.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Категории')
+
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        return Category.objects.filter(is_published=True)
+
+def categorys(requset):
+    context = {
+        'menu': menu,
+        'title': 'Категории',
+    }
+    return render(requset, 'main/categorys.html', context=context)
+
+
+   def show_post_news(request, post_slug):
+    post = get_object_or_404(News, slug=post_slug)
+
+    context = {
+        'post': post,
+        'menu': menu,
+        'title': 'Новость',
+    }
+
+    return render(request, 'main/post.html', context=context)

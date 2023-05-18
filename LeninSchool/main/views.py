@@ -20,7 +20,7 @@ class MainHome(DataMixin, ListView):
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
-        return News.objects.filter(is_published=True)
+        return News.objects.filter(is_published=True).select_related
 
 
 def index(request):
@@ -86,17 +86,6 @@ def show_post_news(request, post_id):
     return render(request, 'main/post.html', context=context)
 
 
-def show_post_news(request, post_slug):
-    post = get_object_or_404(News, slug=post_slug)
-
-    context = {
-        'post': post,
-        'menu': menu,
-        'title': 'Новость',
-    }
-
-    return render(request, 'main/post.html', context=context)
-
 class AboutUsView(DataMixin, ListView):
     model = None
     template_name = 'main/about_us.html'
@@ -109,6 +98,7 @@ class AboutUsView(DataMixin, ListView):
 
     def get_queryset(self):
         return
+
 
 def about_us(request):
     context = {
@@ -138,6 +128,7 @@ def contact_us(request):
         'menu': menu,
     }
     return render(request, 'main/contact_us.html', context=context)
+
 
 class EmployeesView(DataMixin, ListView):
     paginate_by = 10
@@ -178,6 +169,7 @@ class ShowPostEmpoyeesView(DataMixin, ListView):
     def get_queryset(self):
         return Employees.objects.filter(is_published=True)
 
+
 def show_post_employees(request, post_slug):
     post = get_object_or_404(Employees, slug=post_slug)
 
@@ -192,7 +184,7 @@ def show_post_employees(request, post_slug):
 
 
 class SchoolRulesView(DataMixin, ListView):
-    model = None
+    model = SchoolRulesModel
     template_name = 'main/school_rules.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -202,7 +194,8 @@ class SchoolRulesView(DataMixin, ListView):
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
-        return None
+        return SchoolRulesModel.objects.filter(is_published=True)
+
 
 def school_rules(request):
     context = {
@@ -223,7 +216,6 @@ class RegisterView(DataMixin, CreateView):
 
         return dict(list(context.items()) + list(c_def.items()))
 
-
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
@@ -232,13 +224,13 @@ class RegisterView(DataMixin, CreateView):
     def get_queryset(self):
         return
 
+
 def register(request):
     context = {
         'title': 'Регистрация',
         'menu': menu,
     }
     return render(request, 'main/register.html', context=context)
-
 
 
 class LoginUserView(DataMixin, LoginView):
@@ -258,6 +250,7 @@ def logout_user(request):
     logout(request)
     return redirect('login')
 
+
 def log_in(request):
     context = {
         'title': 'Авторизация',
@@ -274,50 +267,6 @@ def profile_user(request):
     return render(request, 'main/profile.html', context=context)
 
 
-class CategoryView(DataMixin, ListView):
-    model = Category
-    template_name = 'main/category.html'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title='Категория')
-
-        return dict(list(context.items()) + list(c_def.items()))
-
-    def get_queryset(self):
-        return Category.objects.all()
-
-
-def category(request, cat_slug):
-    context = {
-        'menu': menu,
-        'title': 'Категория',
-        'cat_selected': cat_slug,
-    }
-    return render(request, 'main/category.html', context=context)
-
-
-class CategorysView(DataMixin, ListView):
-    model = Category
-    template_name = 'main/categorys.html'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title='Категории')
-
-        return dict(list(context.items()) + list(c_def.items()))
-
-    def get_queryset(self):
-        return Category.objects.all()
-
-def categorys(requset):
-    context = {
-        'menu': menu,
-        'title': 'Категории',
-    }
-    return render(requset, 'main/categorys.html', context=context)
-
-
 class AddPageView(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddPostForm
     template_name = 'main/addpage.html'
@@ -330,6 +279,7 @@ class AddPageView(LoginRequiredMixin, DataMixin, CreateView):
         c_def = self.get_user_context(title='Добавление статьи')
 
         return dict(list(context.items()) + list(c_def.items()))
+
 
 def addpage(request):
     if request.method == 'POST':
@@ -347,7 +297,6 @@ def addpage(request):
     return render(request, 'main/addpage.html', context=context)
 
 
-
 def rasView(request):
     raspisanie = AddRaspisanie.objects.all()
     context = {
@@ -357,6 +306,7 @@ def rasView(request):
 
     }
     return render(request, 'main/raspisanie.html', context=context)
+
 
 def rasViewClasses(request, class_slug):
     raspisanie = get_object_or_404(AddRaspisanie, class_url_slug=class_slug)
