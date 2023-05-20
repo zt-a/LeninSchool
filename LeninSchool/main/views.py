@@ -317,3 +317,47 @@ def rasViewClasses(request, class_slug):
     }
 
     return render(request, 'main/ras_class.html', context=context)
+
+
+class HomeworksViews(DataMixin, ListView):
+    model = HomeworkModel
+    template_name = 'main/homeworks.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Домашнии задании')
+
+        return dict(list(context.items()) + list(c_def.items()))
+
+
+class HomeworkViews(DataMixin, ListView):
+    model = HomeworkModel
+    template_name = 'main/homework.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title=f'Домашняя задания')
+
+        return dict(list(context.items()) + list(c_def.items()))
+
+
+class ClassesViews(DataMixin, ListView):
+    model = ClassCategory
+    template_name = 'main/classes.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title=f'Классы')
+
+        return dict(list(context.items()) + list(c_def.items()))
+
+
+class ClassViews(DataMixin, ListView):
+    model = ClassCategory
+    template_name = 'main/class.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title=f'Класс')
+
+        return dict(list(context.items()) + list(c_def.items()))

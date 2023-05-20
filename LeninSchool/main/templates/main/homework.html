@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+{% for homework in homeworks %}
+{{ homework.topic }}
+{{ homework.homework }}
+{{ homework.nameTeacher }}
+{{ homework.forTheClass }}
+{{ homework.is_published }}
+{{ homework.time_create }}
+{{ homework.time_update }}
+{% endfor %}
+{% endblock %}

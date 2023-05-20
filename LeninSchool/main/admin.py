@@ -21,6 +21,16 @@ class NewsAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
 
+
+class ClassCategoryAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'time_create', 'time_update', 'is_published')
+    list_display_links = ('id', 'name',)
+    search_fields = ('id', 'name', 'time_create', 'time_update', 'is_published')
+    list_editable = ('is_published',)
+    list_filter = ('is_published', 'time_create')
+    prepopulated_fields = {'slug': ('name',)}
+
+
 class RasAdmin(admin.ModelAdmin):
     list_display = ('id', 'class_name', 'time_create', 'time_update', 'is_published')
     list_display_links = ('id', 'class_name')
@@ -33,17 +43,24 @@ class RasAdmin(admin.ModelAdmin):
 class SchoolRulesAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'rules', 'time_create', 'time_update', 'is_published')
     list_display_links = ('id', 'title',)
-    search_fields = ('if', 'name', 'time_create', 'time_update',)
+    search_fields = ('id', 'name', 'time_create', 'time_update',)
     list_editable = ('is_published',)
     list_filter = ('is_published', 'time_create')
 
+
+class HomeworkAdmin(admin.ModelAdmin):
+    list_display = ('id', 'topic', 'nameTeacher', 'forTheClass', 'time_create', 'time_update', 'is_published')
+    list_display_links = ('id', 'topic')
+    search_fields = ('id', 'topic', 'nameTeacher', 'forTheClass', 'time_create', 'time_update',)
+    list_editable = ('is_published',)
+    list_filter = ('is_published', 'time_create')
 
 admin.site.register(Employees, EmloyeesAdmin)
 admin.site.register(News, NewsAdmin)
 admin.site.register(AddRaspisanie, RasAdmin)
 admin.site.register(SchoolRulesModel, SchoolRulesAdmin)
-
-
+admin.site.register(ClassCategory, ClassCategoryAdmin)
+admin.site.register(HomeworkModel, HomeworkAdmin)
 
 
 # admin

@@ -65,7 +65,7 @@ class News(models.Model):
 
 class AddRaspisanie(models.Model):
     class_name = models.CharField(max_length=3, verbose_name='Класс')
-    class_url_slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
+    class_url_slug = models.SlugField(max_length=3, unique=True, db_index=True, verbose_name='URL')
 
     day1example1 = models.CharField(max_length=30, verbose_name='День 1 урок 1')
     day1example2 = models.CharField(max_length=30, verbose_name='День 1 урок 2')
@@ -120,7 +120,7 @@ class AddRaspisanie(models.Model):
 
 class SchoolRulesModel(models.Model):
     title = models.CharField(max_length=255, verbose_name='Загаловок')
-    rules = models.TextField(verbose_name='Правило')
+    rules = models.TextField(verbose_name='Правило', )
     time_create = models.DateTimeField(verbose_name='Время создание', auto_now_add=True)
     time_update = models.DateTimeField(verbose_name='Время обновление', auto_now=True)
     is_published = models.BooleanField(verbose_name='Публикация', default=True)
@@ -132,3 +132,72 @@ class SchoolRulesModel(models.Model):
         verbose_name = 'Правило'
         verbose_name_plural = 'Правилы'
         ordering = ['-time_create', 'id']
+
+
+class ClassCategory(models.Model):
+    name = models.CharField(max_length=3, verbose_name='Название класса')
+    slug = models.SlugField(max_length=3, unique=True, db_index=True, verbose_name='URL', )
+    time_create = models.DateTimeField(verbose_name='Время создание', auto_now_add=True)
+    time_update = models.DateTimeField(verbose_name='Время обновление', auto_now=True)
+    is_published = models.BooleanField(verbose_name='Публикация', default=True)
+
+    def __str__(self):
+        return str(self.name)
+
+    def get_absolute_url(self):
+        return reverse('classes', kwargs={'slug': self.slug})
+
+
+
+    class Meta:
+        verbose_name = 'Класс'
+        verbose_name_plural = 'Классы'
+        ordering = ['name', 'id']
+
+
+
+class HomeworkModel(models.Model):
+    topic = models.CharField(max_length=255, verbose_name='Тема урока или название домашний задании')
+    nameTeacher = models.CharField(max_length=255, verbose_name='Ваше имя или имя учителя')
+    forTheClass = models.CharField(max_length=3, verbose_name='Для какого класса')
+
+    homework = models.TextField(verbose_name='Домашние задание')
+    photo = models.ImageField(verbose_name='Фотография', upload_to='photos/news/%Y/%m/%d/', null=True, blank=True)
+
+    time_create = models.DateTimeField(verbose_name='Время создание', auto_now_add=True)
+    time_update = models.DateTimeField(verbose_name='Время обновление', auto_now=True)
+    is_published = models.BooleanField(verbose_name='Публикация', default=True)
+
+    def __str__(self):
+        return self.topic
+
+    class Meta:
+        verbose_name = 'Домашняя задания'
+        verbose_name_plural = 'Домашнии задании'
+        ordering = ['-time_create', 'id']
+
+
+    def get_absolute_url(self):
+        return reverse('homeworks', kwargs={'homework_slug': self.topic})
+
+
+
+# class ListStudents(models.Model):
+#     FIO = models.CharField(max_length=255, verbose_name='ФИО')
+#     student_slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL', )
+#     Class = models.CharField(max_length=3, verbose_name='Класс ученика')
+#     GuardianFIO = models.CharField(max_length=255, verbose_name='ФИО отца или матери или опекуна')
+#     birthday = models.DateField()
+#     time_create = models.DateTimeField(verbose_name='Время создание', auto_now_add=True)
+#     time_update = models.DateTimeField(verbose_name='Время обновление', auto_now=True)
+#     is_published = models.BooleanField(verbose_name='Публикация', default=True)
+#
+#
+#     class Meta:
+#         verbose_name = 'Ученик'
+#         verbose_name_plural = 'Список учеников'
+#         ordering = ['-time_create', 'id']
+#
+#
+#     def get_absolute_url(self):
+#         return reverse('students', kwargs={'student_slug': self.student_slug})

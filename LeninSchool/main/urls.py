@@ -18,5 +18,9 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('raspisanie/', rasView, name='raspisanie'),
     path('raspisanie/<slug:class_slug>/', rasViewClasses, name='class_ras'),
-    path('accounts/profile/', profile_user, name='profile')
+    path('accounts/profile/', profile_user, name='profile'),
+    path('homeworks/', HomeworksViews.as_view(), name='homeworks'),
+    path('homeworks/<slug:homework_slug>/', HomeworkViews.as_view(), name='homework'),
+    path('classes/', ClassesViews.as_view(), name='classes'),
+    path('classes/<slug:slug>', ClassViews.as_view(), name='class')
 ]

@@ -2,4 +2,8 @@
 {% load static %}
 
 {% block content %}
+{% for class in classes %}
+{{ class.slug }}
+{{ class.name }}
+{% endfor %}
 {% endblock %}
